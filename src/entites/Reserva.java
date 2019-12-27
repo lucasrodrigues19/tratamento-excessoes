@@ -36,9 +36,22 @@ public class Reserva {
 		//converte os dias em milessegundos 
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
-	public void atualizar(Date entrada, Date saida) {
+	public String atualizar(Date entrada, Date saida) {
+		
+		//caso a data de saida for antes da entrada, não pode, ou caso a data de entrada ou saida for antes da data atual nao pode
+		Date dataAgora = new Date();
+		if((entrada.before(dataAgora) || saida.before(dataAgora)))
+			return "Erro na reserva, a data de entrada, ou saida tem que ser depois da data atual!";
+		else if(!saida.after(entrada))
+	        return "Erro na reserva, a data de saida tem que ser depois da data de entrada!";
+		else {
 		this.entrada = entrada;
 		this.saida = saida;
+		return null;
+	
+		
+		}
+	
 	}
 
 	@Override

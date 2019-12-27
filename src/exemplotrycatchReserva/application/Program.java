@@ -35,19 +35,16 @@ public static void main(String[] args) throws ParseException  {
 	System.out.print("Saida (DD/MM/YYYY)");
 	saida = sdf.parse(sc.next());
 	
-	Date dataAgora = new Date();
-	//caso a data de saida for antes da entrada, não pode, ou caso a data de entrada ou saida for antes da data atual nao pode
-	if((entrada.before(dataAgora) || saida.before(dataAgora)))
-		System.out.println("Erro na reserva, a data de saida tem que ser depois da data de entrada!");
-	else if(!saida.after(entrada))
-		System.out.println("Erro na reserva, a data de saida tem que ser depois da data de entrada!");
-	else {
-	r.atualizar(entrada, saida);
-	System.out.println(r);
-	}
+	
+	
+	
+	if(r.atualizar(entrada, saida) == null)
+		System.out.println(r);
+	
+	
 	
 	}
-	
+	sc.close();
 }
 
 }
