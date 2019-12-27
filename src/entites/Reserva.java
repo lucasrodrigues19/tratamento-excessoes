@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import excessao.DominioExcessao;
+
 public class Reserva {
 
 	private Integer numeroQuarto;
@@ -17,7 +19,10 @@ public class Reserva {
 		
 	}
 	
-	public Reserva(Integer numeroQuarto, Date entrada, Date saida) {
+	public Reserva(Integer numeroQuarto, Date entrada, Date saida)throws DominioExcessao {
+		if(!saida.after(entrada))
+			throw new DominioExcessao( "Erro na reserva, a data de saida tem que ser depois da data de entrada!");
+		
 		this.numeroQuarto = numeroQuarto;
 		this.entrada = entrada;
 		this.saida = saida;
@@ -36,21 +41,22 @@ public class Reserva {
 		//converte os dias em milessegundos 
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
-	public String atualizar(Date entrada, Date saida) {
+	public void atualizar(Date entrada, Date saida)throws DominioExcessao{
 		
 		//caso a data de saida for antes da entrada, não pode, ou caso a data de entrada ou saida for antes da data atual nao pode
 		Date dataAgora = new Date();
 		if((entrada.before(dataAgora) || saida.before(dataAgora)))
-			return "Erro na reserva, a data de entrada, ou saida tem que ser depois da data atual!";
+			//quer dizer que um argumento(parametro do metodo) veio errado
+			throw new DominioExcessao("Erro na reserva, a data de entrada, ou saida tem que ser depois da data atual!");
 		else if(!saida.after(entrada))
-	        return "Erro na reserva, a data de saida tem que ser depois da data de entrada!";
-		else {
+			throw new DominioExcessao( "Erro na reserva, a data de saida tem que ser depois da data de entrada!");
+		
 		this.entrada = entrada;
 		this.saida = saida;
-		return null;
+		
 	
 		
-		}
+		
 	
 	}
 
